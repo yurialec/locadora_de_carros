@@ -13,7 +13,11 @@ class Cliente extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('clientes', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome', 30);
+            $table->timestamps();
+        });
     }
 
     /**
