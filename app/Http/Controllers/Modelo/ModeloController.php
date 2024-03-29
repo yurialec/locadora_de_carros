@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Locacao;
+namespace App\Http\Controllers\Modelo;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Locacao extends Controller
+class ModeloController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Modelo;
+namespace App\Http\Controllers\Carro;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Modelo extends Controller
+class CarroController extends Controller
 {
     /**
      * Display a listing of the resource.
