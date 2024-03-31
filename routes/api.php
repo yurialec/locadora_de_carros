@@ -6,7 +6,6 @@ use App\Http\Controllers\Locacao\LocacaoController;
 use App\Http\Controllers\Marca\MarcaController;
 use App\Http\Controllers\Modelo\ModeloController;
 use App\Models\Locacao\Locacao;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -7,6 +7,7 @@ use App\Http\Requests\Marca\MarcaRequest;
 use App\Http\Resources\Marca\MarcaResource;
 use App\Models\Marca\Marca;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 
 class MarcaController extends Controller
 {
@@ -41,7 +42,13 @@ class MarcaController extends Controller
      */
     public function store(MarcaRequest $request): JsonResponse
     {
-        $marca = Marca::create($request->all());
+        $imagem = $request->imagem;
+        $imagem_urn = $imagem->store('imagens/marcas', 'public');
+
+        $marca = Marca::create([
+            'nome' => $request->nome,
+            'imagem' => $imagem_urn,
+        ]);
 
         if ($marca) {
             $marcaResource = new MarcaResource($marca);
@@ -78,10 +85,23 @@ class MarcaController extends Controller
      */
     public function update(MarcaRequest $request, int $id): JsonResponse
     {
+        $imagem = $request->imagem;
+        $imagem_urn = $imagem->store('imagens/marcas', 'public');
+
         $marca = $this->marca->find($id);
 
+        if ($request->imagem) {
+            Storage::disk('public')->delete($marca->imagem);
+        }
+
         if (!empty($marca)) {
-            if ($marca->update($request->all())) {
+
+            $marca->update([
+                'nome' => $request->nome,
+                'imagem' => $imagem_urn,
+            ]);
+
+            if ($marca) {
                 $marcaResource = new MarcaResource($marca);
                 return response()->json($marcaResource, 200);
             } else {
@@ -101,6 +121,7 @@ class MarcaController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $marca = $this->marca->find($id);
+        Storage::disk('public')->delete($marca->imagem);
 
         if ($marca) {
             if ($marca->delete()) {

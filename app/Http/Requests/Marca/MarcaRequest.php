@@ -32,7 +32,8 @@ class MarcaRequest extends FormRequest
             ],
             'imagem' => [
                 'required',
-                'max:100',
+                'file',
+                'mimes:jpeg,jpg,png',
             ]
         ];
 
@@ -46,7 +47,8 @@ class MarcaRequest extends FormRequest
 
             $rules['imagem'] = [
                 'nullable',
-                'max:100'
+                'file',
+                'mimes:jpeg,jpg,png'
             ];
         }
 
@@ -61,7 +63,7 @@ class MarcaRequest extends FormRequest
             'nome.max' => 'O campo nome deve conter no máximo 30 caracteres.',
             'nome.unique' => 'Já existe um registro com esse nome.',
             'imagem.required' => 'O campo imagem é obrigatório.',
-            'imagem.max' => 'O campo imagem deve conter no máximo 100 caracteres.',
+            'imagem.mimes' => 'A imagem deve ser do tipo: jpeg, jpg ou png.',
         ];
     }
 }
