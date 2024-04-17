@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Marca;
+namespace App\Http\Resources\Modelo;
 
-use App\Http\Resources\Modelo\ModeloResource;
-use App\Models\Modelo\Modelo;
+use App\Http\Resources\Marca\MarcaResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MarcaResource extends JsonResource
+class ModeloResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,9 +17,14 @@ class MarcaResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'marca_id' => $this->marca_id,
             'nome' => $this->nome,
             'imagem' => $this->imagem,
-            'modelos' => $this->modelos,
+            'numero_portas' => $this->numero_portas,
+            'lugares' => $this->lugares,
+            'air_bag' => $this->air_bag,
+            'abs' => $this->abs,
+            'marca' => $this->marca,
         ];
     }
 }

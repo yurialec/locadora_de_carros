@@ -28,6 +28,6 @@ class Marca extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('marcas');
     }
 }

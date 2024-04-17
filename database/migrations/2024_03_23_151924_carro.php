@@ -22,7 +22,7 @@ class Carro extends Migration
             $table->timestamps();
 
             //foreign key (constraints)
-            $table->foreign('modelo_id')->references('id')->on('modelos');
+            $table->foreign('modelo_id')->references('id')->on('modelos')->onDelete('cascade');
         });
     }
 
@@ -33,6 +33,6 @@ class Carro extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('carros');
     }
 }
