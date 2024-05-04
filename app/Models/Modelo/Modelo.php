@@ -2,6 +2,7 @@
 
 namespace App\Models\Modelo;
 
+use App\Models\Carro\Carro;
 use App\Models\Marca\Marca;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,5 +25,10 @@ class Modelo extends Model
     public function marca()
     {
         return $this->belongsTo(Marca::class);
+    }
+
+    public function carros()
+    {
+        return $this->hasMany(Carro::class);
     }
 }

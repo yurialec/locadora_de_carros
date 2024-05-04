@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Cliente;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ClienteRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class ClienteRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,31 @@ class ClienteRequest extends FormRequest
      */
     public function rules()
     {
+        $rules = [
+            'nome' => [
+                'required',
+                'min:3',
+                'max:30'
+            ],
+        ];
+
+        if ($this->method() === 'PUT') {
+            $rules['nome'] = [
+                'nullable',
+                'min:3',
+                'max:30',
+            ];
+        }
+
+        return $rules;
+    }
+
+    public function messages()
+    {
         return [
-            //
+            'nome.required' => 'O campo nome é obrigatório.',
+            'nome.min' => 'O campo nome deve conter no mínimo 3 caracteres.',
+            'nome.max' => 'O campo nome deve conter no máximo 30 caracteres.',
         ];
     }
 }

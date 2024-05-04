@@ -3,62 +3,91 @@
 namespace App\Http\Controllers\Cliente;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Cliente\ClienteRequest;
+use App\Http\Resources\Cliente\ClienteResource;
+use App\Models\Cliente\Cliente;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public $cliente;
+    public function __construct(Cliente $cliente)
     {
-        //
+        $this->cliente = $cliente;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function index(): JsonResponse
     {
-        //
+        $clientes = $this->cliente->paginate(10);
+        $clientesResource = ClienteResource::collection($clientes);
+
+        if ($clientesResource->isNotEmpty()) {
+            return response()->json($clientesResource, 200);
+        } else {
+            return response()->json(['Nenhum resultado encontrado.', 204]);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function store(ClienteRequest $request): JsonResponse
     {
-        //
+        $cliente = Cliente::create([
+            'nome' => $request->nome,
+        ]);
+
+        if ($cliente) {
+            $clientesResource = new ClienteResource($cliente);
+            return response()->json($cliente, 201);
+        } else {
+            return response()->json(['Erro ao incluir registro', 204]);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function show(int $id): JsonResponse
     {
-        //
+        $cliente = $this->cliente->find($id);
+
+        if (!empty($cliente)) {
+            $clientesResource = new ClienteResource($cliente);
+            return response()->json($clientesResource, 200);
+        } else {
+            return response()->json(['Nenhum resultado encontrado.', 204]);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function update(ClienteRequest $request, int $id): JsonResponse
     {
-        //
+        $cliente = $this->cliente->find($id);
+
+        if (!empty($cliente)) {
+
+            $cliente->update([
+                'nome' => $request->nome,
+            ]);
+
+            if ($cliente) {
+                $clientesResource = new ClienteResource($cliente);
+                return response()->json($clientesResource, 200);
+            } else {
+                return response()->json(['Erro ao atualizar registro.', 204]);
+            }
+        } else {
+            return response()->json(['Nenhum resultado encontrado.', 204]);
+        }
+    }
+
+    public function delete(int $id): JsonResponse
+    {
+        $cliente = $this->cliente->find($id);
+
+        if ($cliente) {
+            if ($cliente->delete()) {
+                return response()->json(['Registro excluido com sucesso.', 200]);
+            } else {
+                return response()->json(['Erro ao excluir registro.', 204]);
+            }
+        } else {
+            return response()->json(['Nenhum resultado encontrado.', 204]);
+        }
     }
 }

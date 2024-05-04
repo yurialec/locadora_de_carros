@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Carro;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CarroRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class CarroRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,47 @@ class CarroRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+        $rules = [
+            'modelo_id' => [
+                'required',
+                'exists:modelos,id',
+            ],
+            'placa' => [
+                'required',
+            ],
+            'disponivel' => [
+                'required',
+                'boolean'
+            ],
+            'km' => [
+                'required',
+                'integer',
+            ],
         ];
+
+        if ($this->method() === 'PUT') {
+
+            $rules['modelo_id'] = [
+                'nullable',
+                'exists:modelos,id',
+            ];
+
+            $rules['placa'] = [
+                'nullable',
+                Rule::unique('carros')->ignore($this->carro)
+            ];
+
+            $rules['disponivel'] = [
+                'nullable',
+                'boolean'
+            ];
+
+            $rules['km'] = [
+                'nullable',
+                'integer',
+            ];
+        }
+
+        return $rules;
     }
 }

@@ -129,7 +129,7 @@ class ModeloController extends Controller
      * @param integer $id
      * @return JsonResponse
      */
-    public function destroy(int $id): JsonResponse
+    public function delete(int $id): JsonResponse
     {
         $modelo = $this->modelo->find($id);
         Storage::disk('public')->delete($modelo->imagem);

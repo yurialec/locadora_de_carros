@@ -118,7 +118,7 @@ class MarcaController extends Controller
      * @param integer $id
      * @return JsonResponse
      */
-    public function destroy(int $id): JsonResponse
+    public function delete(int $id): JsonResponse
     {
         $marca = $this->marca->find($id);
         Storage::disk('public')->delete($marca->imagem);

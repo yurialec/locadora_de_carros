@@ -25,6 +25,7 @@ class ModeloResource extends JsonResource
             'air_bag' => $this->air_bag,
             'abs' => $this->abs,
             'marca' => $this->marca,
+            'carros' => $this->carros,
         ];
     }
 }
