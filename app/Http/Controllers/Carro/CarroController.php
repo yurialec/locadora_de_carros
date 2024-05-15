@@ -17,9 +17,20 @@ class CarroController extends Controller
         $this->carro = $carro;
     }
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $carros = $this->carro->paginate(10);
+        $query = $this->carro->query();
+
+        if ($request->has('search')) {
+            $searchTerm = $request->query('search');
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('placa', '=', $searchTerm)
+                    ->orWhere('disponivel', '=', $searchTerm)
+                    ->orWhere('km', '=', $searchTerm);
+            });
+        }
+
+        $carros = $query->paginate(10);
         $carrosResource = CarroResource::collection($carros);
 
         if ($carrosResource->isNotEmpty()) {

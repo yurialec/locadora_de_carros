@@ -7,6 +7,7 @@ use App\Http\Requests\Marca\MarcaRequest;
 use App\Http\Resources\Marca\MarcaResource;
 use App\Models\Marca\Marca;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class MarcaController extends Controller
@@ -22,9 +23,16 @@ class MarcaController extends Controller
      *
      * @return JsonResponse
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $marcas = $this->marca->paginate(10);
+        $query = $this->marca->query();
+
+        if ($request->has('search')) {
+            $searchTerm = $request->query('search');
+            $query->where('nome', 'like', '%' . $searchTerm . '%');
+        }
+
+        $marcas = $query->paginate(10);
         $marcasResource = MarcaResource::collection($marcas);
 
         if ($marcasResource->isNotEmpty()) {

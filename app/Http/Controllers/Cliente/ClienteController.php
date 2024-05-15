@@ -17,9 +17,15 @@ class ClienteController extends Controller
         $this->cliente = $cliente;
     }
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $clientes = $this->cliente->paginate(10);
+        $query = $this->cliente->query();
+        if ($request->has('search')) {
+            $searchTerm = $request->query('search');
+            $query->where('nome', 'like', '%' . $searchTerm . '%');
+        }
+
+        $clientes = $query->paginate(10);
         $clientesResource = ClienteResource::collection($clientes);
 
         if ($clientesResource->isNotEmpty()) {
