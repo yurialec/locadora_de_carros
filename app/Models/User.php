@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Perfil\Perfil;
+use App\Models\Permissao\Permissao;
+use App\Models\PermissaoPerfil\PermissaoPerfil;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -42,6 +45,8 @@ class User extends Authenticatable implements JWTSubject
         'password',
     ];
 
+    protected $with = ['perfil', 'permissoes'];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -60,4 +65,26 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function perfil()
+    {
+        return $this->belongsTo(Perfil::class);
+    }
+
+    public function permissoes()
+    {
+        return $this->hasManyThrough(
+            Permissao::class,
+            PermissaoPerfil::class,
+            'perfil_id',
+            'id',
+            'perfil_id',
+            'permissao_id'
+        );
+    }
+
+    public function hasPermissions(User $user, string $permissionName): bool
+    {
+        return $user->permissoes()->where('nome', $permissionName)->exists();
+    }
 }

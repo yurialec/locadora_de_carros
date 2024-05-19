@@ -23,9 +23,22 @@ class ModeloController extends Controller
      *
      * @return JsonResponse
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $modelos = $this->modelo->paginate(10);
+        $query = $this->modelo->query();
+
+        if ($request->has('search')) {
+            $searchTerm = $request->query('search');
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('nome', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('numero_portas', '=', $searchTerm)
+                    ->orWhere('lugares', '=', $searchTerm)
+                    ->orWhere('air_bag', '=', $searchTerm)
+                    ->orWhere('abs', '=', $searchTerm);
+            });
+        }
+
+        $modelos = $query->paginate(10);
         $modelosResource = ModeloResource::collection($modelos);
 
         if ($modelosResource->isNotEmpty()) {
