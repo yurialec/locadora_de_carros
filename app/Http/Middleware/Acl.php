@@ -23,7 +23,7 @@ class Acl
     {
         $routeName = Route::currentRouteName();
         if (!$this->user->hasPermissions($request->user(), $routeName)) {
-            abort(403, 'Not authorized');
+            return response()->json(['error' => 'Sem autorização'], 403);
         }
         return $next($request);
     }
