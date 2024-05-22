@@ -3487,7 +3487,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.2"
+                "php": ">=8.0"
             },
             "type": "library",
             "autoload": {
