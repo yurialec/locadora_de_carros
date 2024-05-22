@@ -40,12 +40,12 @@
     <div id="app">
 
         <body id="body-pd">
-            @include('layouts\themes\header')
-            @include('layouts\themes\sidedar')
+            @include('layouts.themes.header')
+            @include('layouts.themes.sidedar')
             <main class="py-4">
                 @yield('content')
             </main>
-            @include('layouts\themes\footer')
+            @include('layouts.themes.footer')
     </div>
 </body>
 
