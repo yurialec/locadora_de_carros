@@ -67,12 +67,11 @@ Route::prefix('locadora/')->group(function () {
 
         //AUTH
         Route::prefix('auth')->group(function () {
-            Route::get('me', [AuthController::class, 'me']);
-            Route::post('logout', 'AuthController@logout');
-            Route::post('logout', [AuthController::class, 'logout']);
+            Route::get('me', [AuthController::class, 'me'])->name('auth.me');
             Route::get('refresh', [AuthController::class, 'refresh']);
         });
     });
-
+    
+    Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::post('login', [AuthController::class, 'login']);
 });

@@ -4,14 +4,16 @@
             <div class="card">
                 <div class="card-header">Login</div>
                 <div class="card-body">
-                    <form method="POST" action="#">
+                    <form method="POST" action="" @submit.prevent="login($event)">
                         <input type="hidden" name="_token" :value="csrf_token">
+                        
+                        {{ this.errorMessage }}
+
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">E-mail</label>
-
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="" required
-                                    autocomplete="email" autofocus>
+                                <input id="email" type="email" class="form-control" name="email"  required
+                                    autocomplete="email" autofocus v-model="email">
                             </div>
                         </div>
 
@@ -20,7 +22,7 @@
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" required
-                                    autocomplete="current-password">
+                                    autocomplete="current-password" v-model="password">
                             </div>
                         </div>
 
@@ -58,9 +60,37 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     props: [
         'csrf_token',
     ],
+    data(){
+        return {
+            email: '',
+            password: '',
+            errorMessage: '',
+        }
+    },
+    methods:{
+        login(){
+            axios.post('http://127.0.0.1:8000/api/locadora/login', {
+                email: this.email,
+                password: this.password
+            })
+            .then(function (response) {
+                console.log(response.data);    
+            })
+            .catch(function (error) {
+                //console.log(error.response.data.error);
+            });
+        },
+    }
 }
 </script>
+<style scoped>
+.alert-danger{
+    color: red;
+}
+</style>
