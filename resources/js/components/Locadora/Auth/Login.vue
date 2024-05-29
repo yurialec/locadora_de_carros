@@ -4,11 +4,13 @@
             <div class="card">
                 <div class="card-header">Login</div>
                 <div class="card-body">
+
+                    <div v-if="this.errorMessage" class="alert alert-danger" role="alert">
+                        E-mail ou senha invalido
+                    </div>
+                    
                     <form method="POST" action="" @submit.prevent="login($event)">
                         <input type="hidden" name="_token" :value="csrf_token">
-                        
-                        {{ this.errorMessage }}
-
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">E-mail</label>
                             <div class="col-md-6">
@@ -70,27 +72,34 @@ export default {
         return {
             email: '',
             password: '',
-            errorMessage: '',
+            errorMessage: false,
         }
     },
     methods:{
-        login(){
+        login(e){
             axios.post('http://127.0.0.1:8000/api/locadora/login', {
                 email: this.email,
                 password: this.password
             })
             .then(function (response) {
-                console.log(response.data);    
+                
+                document.cookie = 'token='+response.data.token;
+
+                /**
+                    const token = response.data.token;
+                    console.log(token);
+                    Cookies.set('token', token);
+                */
+
+                const redirectUrl = response.data.redirect_url;
+                window.location.href = redirectUrl;
+
+                e.target.submit();
             })
-            .catch(function (error) {
-                //console.log(error.response.data.error);
+            .catch(error => {
+                this.errorMessage = true;
             });
         },
     }
 }
 </script>
-<style scoped>
-.alert-danger{
-    color: red;
-}
-</style>

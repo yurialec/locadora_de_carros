@@ -15,11 +15,23 @@ class AuthController extends Controller
      */
     public function login(): JsonResponse
     {
+        /**
+        * Auth::attempt($credentials)
+        *    return response()->json([
+        *        'token' => $token,
+        *       'redirect_url' => route('home')
+        *  ], 200);
+        */
+        
         $credentials = request(['email', 'password']);
+        Auth::attempt($credentials);
         $token = auth('api')->attempt($credentials);
 
         if ($token) {
-            return response()->json(['token' => $token], 200);
+            return response()->json([
+                    'token' => $token,
+                    'redirect_url' => route('home')
+            ], 200);
         } else {
             return response()->json(['error' => 'Usuário ou senha inválido'], 403);
         }
