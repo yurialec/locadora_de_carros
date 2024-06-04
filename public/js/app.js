@@ -5186,14 +5186,25 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    login: function login() {
+    login: function login(e) {
+      var _this = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().post('http://127.0.0.1:8000/api/locadora/login', {
         email: this.email,
         password: this.password
       }).then(function (response) {
-        console.log(response.data);
+        document.cookie = 'token=' + response.data.token;
+
+        /**
+            const token = response.data.token;
+            console.log(token);
+            Cookies.set('token', token);
+        */
+
+        var redirectUrl = response.data.redirect_url;
+        window.location.href = redirectUrl;
+        e.target.submit();
       })["catch"](function (error) {
-        //console.log(error.response.data.error);
+        _this.errorMessage = true;
       });
     }
   }
@@ -5279,41 +5290,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    menus: Object
+  }
+});
 
 /***/ }),
 
@@ -28368,72 +28350,46 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("nav", { staticClass: "nav" }, [
+    _c(
+      "div",
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._l(_vm.menus, function (menu) {
+          return _c("div", { staticClass: "nav_list" }, [
+            _c(
+              "a",
+              { staticClass: "nav_link active", attrs: { href: menu.url } },
+              [
+                _c("i", { class: menu.icon }),
+                _vm._v(" "),
+                _c("span", { staticClass: "nav_name" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(menu.label) +
+                      "\n                "
+                  ),
+                ]),
+              ]
+            ),
+          ])
+        }),
+      ],
+      2
+    ),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("nav", { staticClass: "nav" }, [
-      _c("div", [
-        _c("a", { staticClass: "nav_logo", attrs: { href: "#" } }, [
-          _c("i", { staticClass: "bx bx-layer nav_logo-icon" }),
-          _vm._v(" "),
-          _c("span", { staticClass: "nav_logo-name" }, [
-            _vm._v("\n                Locadora de Carros\n            "),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "nav_list" }, [
-          _c("a", { staticClass: "nav_link active", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "bx bx-grid-alt nav_icon" }),
-            _vm._v(" "),
-            _c("span", { staticClass: "nav_name" }, [
-              _vm._v("\n                    Dashboard\n                "),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "nav_link", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "bx bx-user nav_icon" }),
-            _vm._v(" "),
-            _c("span", { staticClass: "nav_name" }, [
-              _vm._v("Users\n                "),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "nav_link", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "bx bx-message-square-detail nav_icon" }),
-            _vm._v(" "),
-            _c("span", { staticClass: "nav_name" }, [
-              _vm._v("\n                    Messages\n                "),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "nav_link", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "bx bx-bookmark nav_icon" }),
-            _vm._v(" "),
-            _c("span", { staticClass: "nav_name" }, [
-              _vm._v("\n                    Bookmark\n                "),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "nav_link", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "bx bx-folder nav_icon" }),
-            _vm._v(" "),
-            _c("span", { staticClass: "nav_name" }, [
-              _vm._v("\n                    Files\n                "),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "nav_link", attrs: { href: "#" } }, [
-            _c("i", { staticClass: "bx bx-bar-chart-alt-2 nav_icon" }),
-            _vm._v(" "),
-            _c("span", { staticClass: "nav_name" }, [
-              _vm._v("\n                    Stats\n                "),
-            ]),
-          ]),
-        ]),
+    return _c("a", { staticClass: "nav_logo", attrs: { href: "#" } }, [
+      _c("i", { staticClass: "bx bx-layer nav_logo-icon" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "nav_logo-name" }, [
+        _vm._v("\n                Locadora de Carros\n            "),
       ]),
     ])
   },

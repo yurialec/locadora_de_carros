@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Cliente\ClienteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,4 +16,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::prefix('locadora/')->group(function () {
+    Route::prefix('clientes')->group(function () {
+        Route::get('/', [ClienteController::class, 'index'])->name('cliente.index');
+    });
+});

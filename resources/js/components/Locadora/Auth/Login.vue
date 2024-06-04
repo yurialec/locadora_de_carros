@@ -74,16 +74,28 @@ export default {
         }
     },
     methods:{
-        login(){
+        login(e){
             axios.post('http://127.0.0.1:8000/api/locadora/login', {
                 email: this.email,
                 password: this.password
             })
             .then(function (response) {
-                console.log(response.data);    
+                
+                document.cookie = 'token='+response.data.token;
+
+                /**
+                    const token = response.data.token;
+                    console.log(token);
+                    Cookies.set('token', token);
+                */
+
+                const redirectUrl = response.data.redirect_url;
+                window.location.href = redirectUrl;
+
+                e.target.submit();
             })
-            .catch(function (error) {
-                //console.log(error.response.data.error);
+            .catch(error => {
+                this.errorMessage = true;
             });
         },
     }
