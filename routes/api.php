@@ -48,7 +48,7 @@ Route::prefix('locadora/')->group(function () {
                 Route::delete('/delete/{id}', [CarroController::class, 'delete'])->name('carro.delete');
             });
 
-            Route::prefix('cliente')->group(function () {
+            Route::prefix('clientes')->group(function () {
                 Route::get('/', [ClienteController::class, 'index'])->name('cliente.index');
                 Route::post('/store', [ClienteController::class, 'store'])->name('cliente.store');
                 Route::get('/show/{id}', [ClienteController::class, 'show'])->name('cliente.show');

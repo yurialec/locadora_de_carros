@@ -1,7 +1,7 @@
 <template>
     <nav class="nav">
         <div>
-            <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i>
+            <a href="/home" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i>
                 <span class="nav_logo-name">
                     Locadora de Carros
                 </span>

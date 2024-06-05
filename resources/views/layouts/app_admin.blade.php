@@ -21,31 +21,53 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
 
     <!-- CDN -->
-    <link crossorigin="anonymous" rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
 
-    <link crossorigin="anonymous" rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style scoped>
+        .main {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            margin-top: 60px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+    </style>
 </head>
 
-<body>
+<body id="body-pd">
     <div id="app">
-
-        <body id="body-pd">
-            @include('layouts.themes.header')
+        @section('header')
+        @include('layouts.themes.header')
+        @show
+        <div class="main">
+            @section('sidebar')
             @include('layouts.themes.sidedar')
-            <main class="py-4">
-                @yield('content')
-            </main>
+            @show
+            <div class="content-wrapper">
+                <main class="content">
+                    @yield('content')
+                </main>
+            </div>
             @include('layouts.themes.footer')
+        </div>
     </div>
 </body>
 

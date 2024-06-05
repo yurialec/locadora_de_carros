@@ -25,6 +25,8 @@ Vue.component('login-component', require('./components/Locadora/Auth/Login.vue')
 Vue.component('header-component', require('./components/Locadora/Theme/Header-component.vue').default);
 Vue.component('sidebar-component', require('./components/Locadora/Theme/Sidebar-component.vue').default);
 
+Vue.component('marcas-index-component', require('./components/Locadora/Marcas/Marcas-Index-Component.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

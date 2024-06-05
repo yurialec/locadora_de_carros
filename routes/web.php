@@ -16,10 +16,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::prefix('locadora/')->group(function () {
-    Route::prefix('clientes')->group(function () {
-        Route::get('/', [ClienteController::class, 'index'])->name('cliente.index');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware('auth')->group(function () {
+    
+    Route::middleware('acl')->group(function () {
+        Route::prefix('locadora/')->group(function () {
+
+            Route::prefix('marcas')->group(function () {
+                Route::get('/', function () {
+                    return view('locadora.marcas.index');
+                })->name('marca.index');
+            });
+        });
     });
 });
