@@ -66,18 +66,14 @@
                         <div class="mb-3 form-group">
                             <label class="form-label">Nome</label>
                             <input type="text" class="form-control" v-model="nomeMarca">
-
-                            {{ nomeMarca }}
                         </div>
                         <div class="mb-3 form-group">
                             <label class="form-label">Imagem</label>
                             <input type="file" class="form-control-file" @change="carregarImagem($event)">
-
-                            {{ arquivoImagem }}
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Salvar</button>
+                        <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
                     </div>
                 </div>
             </div>
@@ -86,17 +82,54 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
+            urlBase: 'http://127.0.0.1:8000/api/locadora/marca/',
             nomeMarca: '',
             arquivoImagem: [],
+            jwtToken: null,
         }
     },
     methods: {
         carregarImagem(e) {
             this.arquivoImagem = e.target.files;
-        }
+        },
+        getCookie(name) {
+            let cookieArr = document.cookie.split(";");
+            for (let i = 0; i < cookieArr.length; i++) {
+                let cookiePair = cookieArr[i].split("=");
+
+                if (name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            return null;
+        },
+        salvar() {
+            let formData = new FormData();
+            formData.append('nome', this.nomeMarca);
+            formData.append('imagem', this.arquivoImagem[0]);
+
+            this.jwtToken = this.getCookie('jwt_token');
+
+            let config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${this.jwtToken}`
+                }
+            }
+
+            axios.post(this.urlBase + 'store', formData, config)
+                .then(response => {
+                    console.log(response);
+                }).catch(errors => {
+                    console.log(errors);
+                });
+        },
     }
 }
 </script>

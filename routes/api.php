@@ -22,8 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('locadora/')->group(function () {
 
-    Route::middleware('jwt.auth')->group(function () {
-        Route::middleware('acl')->group(function () {
+    
+        
             Route::prefix('marca')->group(function () {
                 Route::get('/', [MarcaController::class, 'index'])->name('marca.index');
                 Route::post('/store', [MarcaController::class, 'store'])->name('marca.store');
@@ -70,8 +70,8 @@ Route::prefix('locadora/')->group(function () {
             Route::get('me', [AuthController::class, 'me'])->name('auth.me');
             Route::get('refresh', [AuthController::class, 'refresh']);
         });
-    });
+
     
     Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::post('login', [AuthController::class, 'login']);
-});
+

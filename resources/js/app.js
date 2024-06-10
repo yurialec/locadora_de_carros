@@ -24,6 +24,7 @@ Vue.component('login-component', require('./components/Locadora/Auth/Login.vue')
 
 Vue.component('header-component', require('./components/Locadora/Theme/Header-component.vue').default);
 Vue.component('sidebar-component', require('./components/Locadora/Theme/Sidebar-component.vue').default);
+Vue.component('alert-component', require('./components/Locadora/Theme/Alert-Component.vue').default);
 
 Vue.component('marcas-index-component', require('./components/Locadora/Marcas/Marcas-Index-Component.vue').default);
 

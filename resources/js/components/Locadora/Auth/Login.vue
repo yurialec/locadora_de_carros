@@ -82,13 +82,6 @@ export default {
             .then(function (response) {
                 
                 document.cookie = 'token='+response.data.token;
-
-                /**
-                    const token = response.data.token;
-                    console.log(token);
-                    Cookies.set('token', token);
-                */
-
                 const redirectUrl = response.data.redirect_url;
                 window.location.href = redirectUrl;
 
