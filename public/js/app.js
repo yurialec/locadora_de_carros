@@ -5307,6 +5307,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -28514,7 +28517,7 @@ var render = function () {
                     },
                   }),
                   _vm._v(
-                    "\n                        \n                        " +
+                    "\n\n                        " +
                       _vm._s(_vm.arquivoImagem) +
                       "\n                    "
                   ),
@@ -28535,9 +28538,16 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row mb-3" }, [
-      _c("div", { staticClass: "col-sm-6" }, [_c("h3", [_vm._v("Marcas")])]),
+      _c("div", { staticClass: "col-sm-3" }, [_c("h3", [_vm._v("Marcas")])]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-sm-6 text-end" }, [
+      _c("div", { staticClass: "col-sm-4" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "textt", placeholder: "Pesquisar Nome da marca" },
+        }),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-3 text-end" }, [
         _c(
           "button",
           {
@@ -28548,7 +28558,7 @@ var staticRenderFns = [
               "data-bs-target": "#cadastrarMarca",
             },
           },
-          [_vm._v("\n                Cadastrar\n            ")]
+          [_vm._v("\n                Cadastrar Novo\n            ")]
         ),
       ]),
     ])

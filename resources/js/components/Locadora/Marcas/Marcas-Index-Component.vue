@@ -1,12 +1,15 @@
 <template>
     <div class="container">
         <div class="row mb-3">
-            <div class="col-sm-6">
+            <div class="col-sm-3">
                 <h3>Marcas</h3>
             </div>
-            <div class="col-sm-6 text-end">
+            <div class="col-sm-4">
+                <input type="textt" class="form-control" placeholder="Pesquisar Nome da marca">
+            </div>
+            <div class="col-sm-3  text-end">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cadastrarMarca">
-                    Cadastrar
+                    Cadastrar Novo
                 </button>
             </div>
         </div>
@@ -69,7 +72,7 @@
                         <div class="mb-3 form-group">
                             <label class="form-label">Imagem</label>
                             <input type="file" class="form-control-file" @change="carregarImagem($event)">
-                            
+
                             {{ arquivoImagem }}
                         </div>
                     </div>
